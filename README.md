@@ -90,4 +90,4 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 _(Nothing yet)_
 
 ## License
-Copyright (c) 2015 Steve Gourley & Scott Davis. Licensed under the MIT license.
+Copyright (c) 2015 AGRC. Licensed under the MIT license.
