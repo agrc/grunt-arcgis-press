@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/agrc/grunt-arcgis-press.svg?branch=master)](https://travis-ci.org/agrc/grunt-arcgis-press)
 # grunt-arcgis-press
 
 > A grunt task for covering your ArcGIS service publishing needs. Hot off the press!

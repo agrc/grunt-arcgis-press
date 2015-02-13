@@ -68,4 +68,6 @@ module.exports = function (grunt) {
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
 
+  grunt.registerTask('travis', ['jshint', 'test']);
+
 };
