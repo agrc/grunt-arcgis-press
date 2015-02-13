@@ -9,43 +9,33 @@
 'use strict';
 
 module.exports = function(grunt) {
-
-    // Please see the Grunt documentation for more information regarding task
-    // creation: http://gruntjs.com/creating-tasks
+    var PythonShell = require('python-shell');
 
     grunt.registerMultiTask('arcgis_press',
         'A grunt task for covering your ArcGIS service publishing needs. Hot off the press!', function() {
 
+        var done = this.async();
+
         // Merge task-specific and/or target-specific options with these defaults.
-        var options = this.options({
-            punctuation: '.',
-            separator: ', '
-        });
+        // var options = this.options({
+        //     // punctuation: '.',
+        //     // separator: ', '
+        // });
 
-        // Iterate over all specified file groups.
-        this.files.forEach(function(file) {
-            // Concat specified files.
-            var src = file.src.filter(function(filepath) {
-                // Warn on and remove invalid source files (if nonull was set).
-                if (!grunt.file.exists(filepath)) {
-                    grunt.log.warn('Source file "' + filepath + '" not found.');
-                    return false;
-                } else {
-                    return true;
-                }
-            }).map(function(filepath) {
-                // Read file source.
-                return grunt.file.read(filepath);
-            }).join(grunt.util.normalizelf(options.separator));
+        var shellOptions = {
+            scriptPath: __dirname + '/scripts'
+        };
 
-            // Handle options.
-            src += options.punctuation;
+        // instead of run we could also use the messaging functionality
+        // see: https://github.com/extrabacon/python-shell#exchanging-data-between-node-and-python
+        PythonShell.run('publish_mxd.py', shellOptions, function (err) {
+            if (err) {
+                grunt.log.error(err.stack);
+                done(false);
+            }
 
-            // Write the destination file.
-            grunt.file.write(file.dest, src);
-
-            // Print a success message.
-            grunt.log.writeln('File "' + file.dest + '" created.');
+            grunt.log.writeln('service published successfully');
+            done();
         });
     });
 
