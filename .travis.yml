@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "0.12"
+  - "iojs"
+before_install:
+  - npm install -g grunt-cli
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+sudo: false
+cache:
+  directories:
+    - node_modules
