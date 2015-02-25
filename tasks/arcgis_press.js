@@ -10,33 +10,56 @@
 
 module.exports = function(grunt) {
     var PythonShell = require('python-shell');
+    var chalk = require('chalk');
+    var mixin = require('./lib/mixin_options');
+    var Promise = require('promise');
 
     grunt.registerMultiTask('arcgis_press',
-        'A grunt task for covering your ArcGIS service publishing needs. Hot off the press!', function() {
+        'A grunt task for covering your ArcGIS service publishing needs. Hot off the press!',
+        function() {
+            var done = this.async();
 
-        var done = this.async();
+            var config = mixin(grunt.config('arcgis_press'), this.target);
 
-        // Merge task-specific and/or target-specific options with these defaults.
-        // var options = this.options({
-        //     // punctuation: '.',
-        //     // separator: ', '
-        // });
+            var shellOptions = {
+                cwd: __dirname + '/scripts',
+                pythonOptions: ['-m'],
+                scriptPath: 'press'
+            };
 
-        var shellOptions = {
-            scriptPath: __dirname + '/scripts'
-        };
+            var promises = [];
 
-        // instead of run we could also use the messaging functionality
-        // see: https://github.com/extrabacon/python-shell#exchanging-data-between-node-and-python
-        PythonShell.run('publish_mxd.py', shellOptions, function (err) {
-            if (err) {
-                grunt.log.error(err.stack);
-                done(false);
+            var publishService = function (service) {
+                shellOptions.args = [JSON.stringify(service), JSON.stringify(config.server)];
+                return new Promise(function (resolve, reject) {
+                    PythonShell.run('', shellOptions, function(err, results) {
+                        if (err) {
+                            grunt.verbose.error(err.stack);
+                            grunt.log.error(err.message);
+                            reject();
+                        }
+
+                        if (results) {
+                            for (var i = 0; i < results.length; i++) {
+                                grunt.log.writelns(chalk.blue(results[i]));
+                            }
+                        }
+
+                        resolve();
+                    });
+                });
+            };
+
+            for (var prop in config.services) {
+                if (config.services.hasOwnProperty(prop)) {
+                    promises.push(publishService(config.services[prop]));
+                }
             }
 
-            grunt.log.writeln('service published successfully');
-            done();
+            Promise.all(promises).then(function () {
+                done();
+            }, function () {
+                done(false);
+            });
         });
-    });
-
 };

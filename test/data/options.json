@@ -1,0 +1,58 @@
+{
+    "options": {
+        "commonServiceProperties": {
+            "minInstancesPerNode": 1,
+            "maxInstancesPerNode": 3
+        },
+        "server": {
+            "username": "hello",
+            "password": "blah"
+        },
+        "services": {
+            "mainMapService": {
+                "type": "MapServer",
+                "serviceName": "MainMapService",
+                "pathToResource": "/blah/blah",
+                "minInstancesPerNode": 2,
+                "capabilities": "Map,Query",
+                "properties": {
+                    "maxRecordCount": "1500"
+                }
+            },
+            "toolbox": {
+                "type": "GPServer",
+                "pathToResource": "scripts/...",
+                "properties": {
+                    "maximumRecords": "1500"
+                }
+            },
+            "soe": {
+                "type": "SOE",
+                "path": "soe/xyq.soe",
+                "name": "mySoe"
+            }
+        }
+    },
+    "dev": {
+        "options": {
+            "server": {
+                "host": "localhost"
+            },
+            "commonServiceProperties": {
+            "minInstancesPerNode": 0
+            },
+            "services": {
+                "mainMapService": {
+                    "serviceName": "MainDevMapService"
+                }
+            }
+        }
+    },
+    "stage": {
+        "options": {
+            "server": {
+                "host": "123.123.123.456"
+            }
+        }
+    }
+}

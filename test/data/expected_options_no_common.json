@@ -1,0 +1,31 @@
+{
+    "server": {
+        "username": "hello",
+        "password": "blah",
+        "host": "localhost"
+    },
+    "services": {
+        "mainMapService": {
+            "type": "MapServer",
+            "serviceName": "MainDevMapService",
+            "pathToResource": "/blah/blah",
+            "minInstancesPerNode": 2,
+            "capabilities": "Map,Query",
+            "properties": {
+                "maxRecordCount": "1500"
+            }
+        },
+        "toolbox": {
+            "type": "GPServer",
+            "pathToResource": "scripts/...",
+            "properties": {
+                "maximumRecords": "1500"
+            }
+        },
+        "soe": {
+            "type": "SOE",
+            "path": "soe/xyq.soe",
+            "name": "mySoe"
+        }
+    }
+}

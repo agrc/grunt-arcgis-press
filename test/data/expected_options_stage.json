@@ -1,0 +1,36 @@
+{
+    "server": {
+        "username": "hello",
+        "password": "blah",
+        "host": "123.123.123.456"
+    },
+    "services": {
+        "mainMapService": {
+            "type": "MapServer",
+            "serviceName": "MainMapService",
+            "pathToResource": "/blah/blah",
+            "minInstancesPerNode": 2,
+            "maxInstancesPerNode": 3,
+            "capabilities": "Map,Query",
+            "properties": {
+                "maxRecordCount": "1500"
+            }
+        },
+        "toolbox": {
+            "type": "GPServer",
+            "pathToResource": "scripts/...",
+            "minInstancesPerNode": 1,
+            "maxInstancesPerNode": 3,
+            "properties": {
+                "maximumRecords": "1500"
+            }
+        },
+        "soe": {
+            "type": "SOE",
+            "path": "soe/xyq.soe",
+            "minInstancesPerNode": 1,
+            "maxInstancesPerNode": 3,
+            "name": "mySoe"
+        }
+    }
+}
