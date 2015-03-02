@@ -3,4 +3,4 @@
 
 __version__ = '0.1.0'
 
-print 'ArcGIS Press version {}'.format(__version__)
+# print 'ArcGIS Press version {}'.format(__version__)

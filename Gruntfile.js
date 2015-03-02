@@ -17,11 +17,11 @@ module.exports = function(grunt) {
         secrets = grunt.file.readJSON('secrets.json');
     } catch (e) {
         secrets = {
-            devHost: 'blah',
+            devHost: 'localhost',
             stageHost: 'blah',
             username: 'username',
             password: 'password',
-            mxdPath: 'path'
+            mxdBasePath: 'path'
         };
     }
 
@@ -30,6 +30,8 @@ module.exports = function(grunt) {
         arcgis_press: {
             options: {
                 // Any service props defined here are applied to all services.
+                mapServerBasePath: secrets.mxdBasePath,
+                gpServerBasePath: '',
                 commonServiceProperties: {
                     minInstancesPerNode: 1,
                     maxInstancesPerNode: 3
@@ -45,10 +47,19 @@ module.exports = function(grunt) {
                     // Prop names need to be unique.
                     mainMapService: {
                         type: 'MapServer',
-                        serviceName: 'MainMapService',
-                        // would probably come from a secrets.js file
-                        pathToResource: secrets.mxdPath,
-                        filePath: 'cant get this to work',
+                        serviceName: '1',
+                        resource: 'This.mxd',
+                        folder: 'Pressed',
+                        minInstancesPerNode: 2,
+                        capabilities: 'Map,Query',
+                        properties: {
+                            maxRecordCount: '1500'
+                        }
+                    },
+                    mainMapService2: {
+                        type: 'MapServer',
+                        serviceName: '2',
+                        resource: 'Other.mxd',
                         // this prop would override the general one above
                         minInstancesPerNode: 2,
                         capabilities: 'Map,Query',
@@ -58,7 +69,7 @@ module.exports = function(grunt) {
                     }
                     // toolbox: {
                     //     type: 'GPServer',
-                    //     pathToResource: 'scripts/...',
+                    //     basePathToResource: 'scripts/...',
                     //     properties: {
                     //         maximumRecords: '1500'
                     //     }
@@ -80,7 +91,7 @@ module.exports = function(grunt) {
                     },
                     services: {
                         mainMapService: {
-                            serviceName: 'MainDevMapService'
+                            serviceName: 'This'
                         }
                     }
                 }
@@ -120,6 +131,7 @@ module.exports = function(grunt) {
     // Actually load this plugin's task(s).
     grunt.loadTasks('tasks');
 
+    //grunt.registerTask('test', ['arcgis_press:dev', 'nodeunit']);
     grunt.registerTask('test', ['nodeunit']);
 
     grunt.registerTask('default', grunt.config('watch.tasks').concat('watch'));

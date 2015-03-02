@@ -91,3 +91,19 @@ _(Nothing yet)_
 
 ## License
 Copyright (c) 2015 AGRC. Licensed under the MIT license.
+
+## Stage
+`press stage <ip> <username> <password> <json> <[temp_folder]>`  
+`python -m press stage localhost user pass {\"type\":\"MapServer\",\"serviceName\":\"MainDevMapService\",\"resource\":\"C:\\Projects\\GitHub\\BEMS\\maps\\BEMS.local.mxd\",\"folder\":\"press\"}`
+
+## Upload
+`press upload <ip> <username> <password> <sd> <connection_file>`  
+`python -m press upload localhost user pass c:\\Projects\\GitHub\\grunt-arcgis-press\\tasks\\scripts\\.temp\\draft.sd c:\\Projects\\GitHub\\grunt-arcgis-press\\tasks\\scripts\\.temp\\server_connection.ags`
+
+## Edit
+`press edit <ip> <username> <password> <json> <[temp_folder]>` 
+`python -m press edit localhost user pass {\"type\":\"MapServer\",\"serviceName\":\"MainDevMapService\",\"resource\":\"C:\\Projects\\GitHub\\BEMS\\maps\\BEMS.local.mxd\",\"minInstancesPerNode\":2,\"capabilities\":\"Map,Query\",\"properties\":{\"maxRecordCount\":\"1500\"},\"maxInstancesPerNode\":3}`
+
+## Publish
+`press upload <ip> <username> <password> <json> <[temp_folder]>`  
+`python -m press publish localhost user pass {\"type\":\"MapServer\",\"serviceName\":\"MainDevMapService\",\"resource\":\"C:\\Projects\\GitHub\\BEMS\\maps\\BEMS.local.mxd\",\"minInstancesPerNode\":2,\"capabilities\":\"Map,Query\",\"properties\":{\"maxRecordCount\":\"500\"},\"maxInstancesPerNode\":3}`
