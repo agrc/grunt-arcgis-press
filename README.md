@@ -27,83 +27,78 @@ In your project's Gruntfile, add a section named `arcgis_press` to the data obje
 grunt.initConfig({
   arcgis_press: {
     options: {
-      // Task-specific options go here.
+      server: {
+        username: 'an administrative username for accessing the /arcgis/admin page. Store this value in your secrets.json file.',
+        password: 'the password for that user. Store this value in your secrets.json file.'
+      },
+      mapServiceBasePath: 'the base path (parent folder) to your mxd\'s. This can be placed into your secrets.json file to allow for different project structures among developers.',
+      commonServiceProperties: {
+        // these properties can be any item from the services json. They will be mixed into all of services 
+        minInstancesPerNode: 0,
+        maxInstancesPerNode: 3
+      },
+      services: {
+        service1: {
+          type: 'The type of the resource being published (MapServer|GpServer|Soe)',
+          serviceName: 'The service name when publishing to server',
+          resource: 'The file name with extension from within the serviceBasePath being published.'
+          // all commonServiceProperties will be mixed in with these
+        },
+        service2: {
+          // you can have as many of these as you need for your project.
+        }
+      }    
     },
-    your_target: {
-      // Target-specific file lists and/or options go here.
+    dev: {
+      // Target-specific overrides for test, stage, and production go here. These override the service level entries.
+      server: {
+        host: secrets.devHost
+      },
+      commonServiceProperties: {
+          minInstancesPerNode: 0
+      },
+      services: {
+          // these names much match the earlier entries for the overrides to link
+          service1: {
+              serviceName: 'This'
+          }
+      }
     },
+    stage: {
+      server: {
+        host: secrets.stageHost
+      },
+    },
+    prod: {
+      server: {
+        host: secrets.prodHost
+      },
+    }
   },
 })
 ```
 
-### Options
+## Python usage
+grunt-arcgis-press uses a python module to perform the interactions with arcgis server. This python module makes it possible to use the modules api without using grunt. Theoretically, other build tool plugins could be created using the python module or you can invoke it directly. It invaluable for debugging also. Below are the cli options and examples. 
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
-
-A string value that is used to do something with whatever.
-
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
-
-### Usage Examples
-
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  arcgis_press: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  arcgis_press: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
-
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-## Release History
-_(Nothing yet)_
-
-## License
-Copyright (c) 2015 AGRC. Licensed under the MIT license.
-
-## Stage
+### Stage
 `press stage <ip> <username> <password> <json> <[temp_folder]>`  
 `python -m press stage localhost user pass {\"type\":\"MapServer\",\"serviceName\":\"MainDevMapService\",\"resource\":\"C:\\Projects\\GitHub\\BEMS\\maps\\BEMS.local.mxd\",\"folder\":\"press\"}`
 
-## Upload
+### Upload
 `press upload <ip> <username> <password> <sd> <connection_file>`  
 `python -m press upload localhost user pass c:\\Projects\\GitHub\\grunt-arcgis-press\\tasks\\scripts\\.temp\\draft.sd c:\\Projects\\GitHub\\grunt-arcgis-press\\tasks\\scripts\\.temp\\server_connection.ags`
 
-## Edit
+### Edit
 `press edit <ip> <username> <password> <json> <[temp_folder]>` 
 `python -m press edit localhost user pass {\"type\":\"MapServer\",\"serviceName\":\"MainDevMapService\",\"resource\":\"C:\\Projects\\GitHub\\BEMS\\maps\\BEMS.local.mxd\",\"minInstancesPerNode\":2,\"capabilities\":\"Map,Query\",\"properties\":{\"maxRecordCount\":\"1500\"},\"maxInstancesPerNode\":3}`
 
-## Publish
+### Publish
 `press upload <ip> <username> <password> <json> <[temp_folder]>`  
 `python -m press publish localhost user pass {\"type\":\"MapServer\",\"serviceName\":\"MainDevMapService\",\"resource\":\"C:\\Projects\\GitHub\\BEMS\\maps\\BEMS.local.mxd\",\"minInstancesPerNode\":2,\"capabilities\":\"Map,Query\",\"properties\":{\"maxRecordCount\":\"500\"},\"maxInstancesPerNode\":3}`
+
+## Release History
+**0.2.0** - Initial release. Available functionality limited to publishing `.mxd` documents. 
+
+## License
+Copyright (c) 2015 AGRC. Licensed under the MIT license.
