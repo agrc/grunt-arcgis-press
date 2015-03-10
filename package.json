@@ -1,6 +1,6 @@
 {
   "name": "grunt-arcgis-press",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A grunt task for covering your ArcGIS service publishing needs. Hot off the press!",
   "homepage": "https://github.com/agrc/grunt-arcgis-press",
   "repository": "https://github.com/agrc/grunt-arcgis-press",
