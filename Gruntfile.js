@@ -11,6 +11,7 @@
 module.exports = function(grunt) {
     // load all npm grunt tasks
     require('load-grunt-tasks')(grunt);
+    var path = require('path');
 
     var secrets;
     try {
@@ -30,7 +31,7 @@ module.exports = function(grunt) {
         arcgis_press: {
             options: {
                 // Any service props defined here are applied to all services.
-                mapServerBasePath: secrets.mxdBasePath,
+                mapServerBasePath: path.join(process.cwd(), 'test'),
                 gpServerBasePath: '',
                 commonServiceProperties: {
                     minInstancesPerNode: 1,
@@ -47,8 +48,8 @@ module.exports = function(grunt) {
                     // Prop names need to be unique.
                     mainMapService: {
                         type: 'MapServer',
-                        serviceName: '1',
-                        resource: 'This.mxd',
+                        serviceName: 'ServiceOne',
+                        resource: 'MapServiceOne.mxd',
                         folder: 'Pressed',
                         minInstancesPerNode: 2,
                         capabilities: 'Map,Query',
@@ -58,8 +59,8 @@ module.exports = function(grunt) {
                     },
                     mainMapService2: {
                         type: 'MapServer',
-                        serviceName: '2',
-                        resource: 'Other.mxd',
+                        serviceName: 'ServiceTwo',
+                        resource: 'MapServiceTwo.mxd',
                         // this prop would override the general one above
                         minInstancesPerNode: 2,
                         capabilities: 'Map,Query',
@@ -91,7 +92,7 @@ module.exports = function(grunt) {
                     },
                     services: {
                         mainMapService: {
-                            serviceName: 'This'
+                            serviceName: 'DevServiceOne'
                         }
                     }
                 }
@@ -108,7 +109,8 @@ module.exports = function(grunt) {
             all: [
                 'Gruntfile.js',
                 'tasks/*.js',
-                '<%= nodeunit.tests %>'
+                '<%= nodeunit.tests %>',
+                '!**.gdb/**'
             ],
             options: {
                 jshintrc: '.jshintrc',
