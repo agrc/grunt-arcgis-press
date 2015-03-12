@@ -21,7 +21,7 @@ grunt.loadNpmTasks('grunt-arcgis-press');
 ## The "arcgis_press" task
 
 ### Overview
-In your project's Gruntfile, add a section named `arcgis_press` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a property named `arcgis_press` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
@@ -33,7 +33,7 @@ grunt.initConfig({
       },
       mapServiceBasePath: 'the base path (parent folder) to your mxd\'s. This can be placed into your secrets.json file to allow for different project structures among developers.',
       commonServiceProperties: {
-        // these properties can be any item from the services json. They will be mixed into all of services 
+        // These properties can be any item from the service json. They will be mixed into all of services 
         minInstancesPerNode: 0,
         maxInstancesPerNode: 3
       },
@@ -58,7 +58,7 @@ grunt.initConfig({
           minInstancesPerNode: 0
       },
       services: {
-          // these names much match the earlier entries for the overrides to link
+          // these names must match the earlier entries for the overrides to link
           service1: {
               serviceName: 'This'
           }
@@ -79,7 +79,7 @@ grunt.initConfig({
 ```
 
 ## Python usage
-grunt-arcgis-press uses a python module to perform the interactions with arcgis server. This python module makes it possible to use the modules api without using grunt. Theoretically, other build tool plugins could be created using the python module or you can invoke it directly. It invaluable for debugging also. Below are the cli options and examples. 
+grunt-arcgis-press uses a python module to perform the interactions with arcgis server. This python module makes it possible to use the modules api without using grunt. Theoretically, other build tool plugins could be created using the python module or you could invoke it directly. Also, it's invaluable for debugging. Below are the cli options and examples. 
 
 ### Stage
 `press stage <ip> <username> <password> <json> <[temp_folder]>`  
@@ -98,7 +98,7 @@ grunt-arcgis-press uses a python module to perform the interactions with arcgis 
 `python -m press publish localhost user pass {\"type\":\"MapServer\",\"serviceName\":\"MainDevMapService\",\"resource\":\"C:\\Projects\\GitHub\\BEMS\\maps\\BEMS.local.mxd\",\"minInstancesPerNode\":2,\"capabilities\":\"Map,Query\",\"properties\":{\"maxRecordCount\":\"500\"},\"maxInstancesPerNode\":3}`
 
 ## Release History
-**0.2.0** - Initial release. Available functionality limited to publishing `.mxd` documents. 
+**0.2.0** - Initial release. Available functionality limited to publishing `.mxd` documents as dynamic map services. 
 
 ## License
 Copyright (c) 2015 AGRC. Licensed under the MIT license.
