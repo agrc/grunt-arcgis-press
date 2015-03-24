@@ -91,7 +91,7 @@ module.exports = function(grunt) {
                     .then(function () {
                         var msg = sn + ' (' + service.type +
                             ') was successfully published to ' + config.server.host;
-                        grunt.verbose.writelns(chalk.blue(msg));
+                        grunt.writelns(chalk.blue(msg));
                     });
             };
 
