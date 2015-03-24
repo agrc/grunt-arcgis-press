@@ -25,57 +25,63 @@ In your project's Gruntfile, add a property named `arcgis_press` to the data obj
 
 ```js
 grunt.initConfig({
-  arcgis_press: {
-    options: {
-      server: {
-        username: 'an administrative username for accessing the /arcgis/admin page. Store this value in your secrets.json file.',
-        password: 'the password for that user. Store this value in your secrets.json file.'
-      },
-      mapServerBasePath: 'the base path (parent folder) to your mxd\'s. This can be placed into your secrets.json file to allow for different project structures among developers.',
-      commonServiceProperties: {
-        // These properties can be any item from the service json. They will be mixed into all of services 
-        minInstancesPerNode: 0,
-        maxInstancesPerNode: 3
-      },
-      services: {
-        service1: {
-          type: 'The type of the resource being published (MapServer|GpServer|Soe)',
-          serviceName: 'The service name when publishing to server',
-          resource: 'The file name with extension from within the serviceBasePath being published.'
-          // all commonServiceProperties will be mixed in with these
+    arcgis_press: {
+        options: {
+            server: {
+                username: 'an administrative username for accessing the /arcgis/admin page. Store this value in your secrets.json file.',
+                password: 'the password for that user. Store this value in your secrets.json file.'
+            },
+            mapServerBasePath: 'the base path (parent folder) to your mxd\'s. This can be placed into your secrets.json file to allow for different project structures among developers.',
+            commonServiceProperties: {
+                // These properties can be any item from the service json. They will be mixed into all of services 
+                minInstancesPerNode: 0,
+                maxInstancesPerNode: 3
+            },
+            services: {
+                service1: {
+                    type: 'The type of the resource being published (MapServer|GpServer|Soe)',
+                    serviceName: 'The service name when publishing to server',
+                    resource: 'The file name with extension from within the serviceBasePath being published.'
+                        // all commonServiceProperties will be mixed in with these
+                },
+                service2: {
+                    // you can have as many of these as you need for your project.
+                }
+            }
         },
-        service2: {
-          // you can have as many of these as you need for your project.
+        dev: {
+            options: {
+                // Target-specific overrides for test, stage, and production go here. These override the service level entries.
+                server: {
+                    host: secrets.devHost
+                },
+                commonServiceProperties: {
+                    minInstancesPerNode: 0
+                },
+                services: {
+                    // these names must match the earlier entries for the overrides to link
+                    service1: {
+                        serviceName: 'This'
+                    }
+                }
+            }
+        },
+        stage: {
+            options: {
+                server: {
+                    host: secrets.stageHost
+                }
+            }
+        },
+        prod: {
+            options: {
+                server: {
+                    host: secrets.prodHost
+                }
+            }
         }
-      }    
     },
-    dev: {
-      // Target-specific overrides for test, stage, and production go here. These override the service level entries.
-      server: {
-        host: secrets.devHost
-      },
-      commonServiceProperties: {
-          minInstancesPerNode: 0
-      },
-      services: {
-          // these names must match the earlier entries for the overrides to link
-          service1: {
-              serviceName: 'This'
-          }
-      }
-    },
-    stage: {
-      server: {
-        host: secrets.stageHost
-      },
-    },
-    prod: {
-      server: {
-        host: secrets.prodHost
-      },
-    }
-  },
-})
+});
 ```
 
 ## Python usage
