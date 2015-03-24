@@ -31,7 +31,7 @@ grunt.initConfig({
         username: 'an administrative username for accessing the /arcgis/admin page. Store this value in your secrets.json file.',
         password: 'the password for that user. Store this value in your secrets.json file.'
       },
-      mapServiceBasePath: 'the base path (parent folder) to your mxd\'s. This can be placed into your secrets.json file to allow for different project structures among developers.',
+      mapServerBasePath: 'the base path (parent folder) to your mxd\'s. This can be placed into your secrets.json file to allow for different project structures among developers.',
       commonServiceProperties: {
         // These properties can be any item from the service json. They will be mixed into all of services 
         minInstancesPerNode: 0,
