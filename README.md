@@ -43,7 +43,8 @@ grunt.initConfig({
                 service1: {
                     type: 'The type of the resource being published (MapServer|GpServer|Soe)',
                     serviceName: 'The service name when publishing to server',
-                    resource: 'The file name with extension from within the serviceBasePath being published.'
+                    resource: 'The file name with extension from within the serviceBasePath being published.',
+                    folder: 'The folder on arcgis server within which you want the service published (omit for root folder)'
                         // all commonServiceProperties will be mixed in with these
                 },
                 service2: {
