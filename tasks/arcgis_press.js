@@ -72,7 +72,7 @@ module.exports = function(grunt) {
                     tempFolder
                 ];
                 var sn = service.serviceName;
-                grunt.log.writelns(chalk.blue('Publishing: ' + sn));
+                grunt.log.writelns(chalk.blue('Publishing: ' + sn + ' to ' + config.server.host));
                 grunt.verbose.writelns(chalk.blue(sn + ': staging...'));
                 return invokePython('stage', args)
                     .then(function(results) {
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
                     .then(function () {
                         var msg = sn + ' (' + service.type +
                             ') was successfully published to ' + config.server.host;
-                        grunt.writelns(chalk.blue(msg));
+                        grunt.log.writelns(chalk.blue(msg));
                     });
             };
 
