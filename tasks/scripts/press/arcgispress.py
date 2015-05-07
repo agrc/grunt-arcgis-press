@@ -7,7 +7,7 @@ press
 the main module
 '''
 
-from services import GetTokenCommand, ServiceExistsCommand, GetServiceJsonCommand, EditServiceCommand
+from services import *
 from models import Server
 from os import getcwd
 from os.path import join
@@ -27,11 +27,11 @@ class Press(object):
         self._token = command.execute()
 
     def stage(self, serviceConfig):
-        connection_file = self.py.get_server_connection_file(self._server, self._tempFolder)
-        # print('connection file created')
+        connection_file = self.py.get_server_connection_file(
+            self._server, self._tempFolder)
 
-        sddraft = self.py.create_sd_draft(self._tempFolder, connection_file, **serviceConfig)
-        # print('drafted')
+        sddraft = self.py.create_sd_draft(
+            self._tempFolder, connection_file, **serviceConfig)
 
         data = {
             'token': self._token,
@@ -51,7 +51,6 @@ class Press(object):
             self.py.modify_sd_for_replacement(sddraft)
 
         sd = self.py.stage_service(sddraft)
-        # print('staged')
 
         print(sd.getOutput(0))
         print(connection_file)

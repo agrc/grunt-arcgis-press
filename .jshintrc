@@ -1,4 +1,7 @@
 {
+    "predef": [
+        "JSON"
+    ],
     "bitwise": true,
     "browser": true,
     "browser": true,
